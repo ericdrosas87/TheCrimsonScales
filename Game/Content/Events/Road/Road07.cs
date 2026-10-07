@@ -7,7 +7,7 @@ public class Road07 : RoadEventModel<Road07.ChoiceA, Road07.ChoiceB>
 
 	public override string Text =>
 		"""
-		You aim your bow and arrow at a bird in the sky and smile as your dinner falls to the ground. As you approach your meal, and Inox hops out of the bushes with a bow arched over his back.
+		You aim your bow and arrow at a bird in the sky and smile as your dinner falls to the ground. As you approach your meal, an Inox hops out of the bushes with a bow arched over his back.
 
 		"Stay back, that bird is mine," the Inox snarls. At first you think he must be joking, but he insists that this is his kill to claim.
 		""";
@@ -18,7 +18,7 @@ public class Road07 : RoadEventModel<Road07.ChoiceA, Road07.ChoiceB>
 
 		public override string GetStoryText(SavedEventState state) =>
 			"""
-			You back away and let the Inox keep the bird. 
+			You back away and let the Inox keep the bird.
 
 			You spend the next few hours wandering around but the skies are empty, and eventually settle on a half-eaten bird carcass lying on the floor. You roast it and proceed to eat it, but the taste is foul and leaves you feeling sick.
 			""";
@@ -56,7 +56,7 @@ public class Road07 : RoadEventModel<Road07.ChoiceA, Road07.ChoiceB>
 			{
 				return
 					"""
-					You draw your blade but the Inox is unimpressed. He lunges toward you and a brawl ensues, but you both pause at the sight of a fox running of with your meal.
+					You draw your blade but the Inox is unimpressed. He lunges toward you and a brawl ensues, but you both pause at the sight of a fox running off with your meal.
 					""";
 			}
 		}
