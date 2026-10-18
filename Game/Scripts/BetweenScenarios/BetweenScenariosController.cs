@@ -4,9 +4,6 @@ using System.Linq;
 using System.Threading;
 using Fractural.Tasks;
 using Godot;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-
 public partial class BetweenScenariosController : SceneController<BetweenScenariosController>
 {
 	[Export]
@@ -73,6 +70,16 @@ public partial class BetweenScenariosController : SceneController<BetweenScenari
 	public override void _Ready()
 	{
 		base._Ready();
+
+		if(SceneRequest.RemovedSavedScenario)
+		{
+			AppController.Instance.PopupManager.RequestPopup(new TextPopup.Request("New Version",
+				"""
+				A new version of The Crimson Scales was installed. This unfortunately meant that the progress on the last scenario was incompatible with the new version.
+
+				Please always make sure to finish up a scenario before installing a new version of the application! Our apologies for the inconvenience.
+				"""));
+		}
 
 		StartSequence().Forget();
 	}
@@ -219,11 +226,7 @@ public partial class BetweenScenariosController : SceneController<BetweenScenari
 			return;
 		}
 
-		string monsterList = "";
-		foreach (MonsterModel monster in scenarioModel.MonsterModels)
-		{
-			monsterList += $"- {monster.Name} \n";
-		}
+		string monsterList = string.Join("\n", scenarioModel.MonsterModels.Select(m => $"- {m.Name}"));
 
 		AppController.Instance.PopupManager.OpenPopupOnTop(new TextPopup.Request($"Scenario {scenarioModel.ScenarioNumber} - {scenarioModel.Name}",
 		$"Goal: {scenarioModel.PreviewText} \n Enemies: \n {monsterList}"
