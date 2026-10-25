@@ -1,21 +1,24 @@
 [gd_scene format=3 uid="uid://c1uq5jarjyic6"]
 
 [ext_resource type="Script" uid="uid://34bxka0iks0f" path="res://Scripts/UI/Popups/EnemyPreview.cs" id="1_ckxsq"]
+[ext_resource type="Texture2D" uid="uid://g8xi1qxcq6mi" path="res://Content/Monsters/Cultist/Portrait.jpg" id="2_ckxsq"]
 
-[node name="EnemyPreview" type="MarginContainer" unique_id=1462956717 node_paths=PackedStringArray("_enemyName", "_enemyPortrait")]
+[node name="EnemyPreview" type="MarginContainer" unique_id=1462956717 node_paths=PackedStringArray("_enemyName", "_enemyPortrait", "_vboxContainer")]
 offset_right = 287.0
 offset_bottom = 284.0
 script = ExtResource("1_ckxsq")
 _enemyName = NodePath("Container/EnemyName")
 _enemyPortrait = NodePath("Container/EnemyPortrait")
+_vboxContainer = NodePath("Container")
 
 [node name="Container" type="VBoxContainer" parent="." unique_id=659204258]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 
 [node name="EnemyPortrait" type="TextureRect" parent="Container" unique_id=108062235]
-custom_minimum_size = Vector2(0, 100)
+custom_minimum_size = Vector2(120, 180)
 layout_mode = 2
+texture = ExtResource("2_ckxsq")
 expand_mode = 1
 
 [node name="EnemyName" type="Label" parent="Container" unique_id=940357815]

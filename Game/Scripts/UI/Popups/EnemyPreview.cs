@@ -1,13 +1,14 @@
 using Godot;
 using System;
 
-public partial class EnemyPreview : Node
+public partial class EnemyPreview : Control
 {
 	[Export]
 	private Label _enemyName;
-
 	[Export]
 	private TextureRect _enemyPortrait;
+	[Export]
+	private VBoxContainer _vboxContainer;
 	
 	public string EnemyName { get; set; }
 	public string ResourcePath { get; set; }
@@ -25,10 +26,7 @@ public partial class EnemyPreview : Node
 	{
 		EnemyName = name;
 		_enemyName.SetText(name);
-		// Texture2D enemyTexture = new Texture2D();
-		// enemyTexture.set
 		_enemyPortrait.Texture =  GD.Load<Texture2D>(portraitPath);
-		//PortraitTexturePath
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

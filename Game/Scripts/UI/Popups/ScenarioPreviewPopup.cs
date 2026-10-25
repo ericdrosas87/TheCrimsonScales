@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Godot;
 
@@ -11,6 +12,8 @@ public partial class ScenarioPreviewPopup : Popup<ScenarioPreviewPopup.Request>
 		public TextButton.Parameters[] ButtonParameters { get; }
 
 		public List<MonsterModel> MonsterModels { get; }
+
+		public List<SavedReward> SavedRewards { get; }
 
 		public Request(string headerText, string text)
 			: this(headerText, text, new TextButton.Parameters("Confirm", null))
@@ -38,11 +41,13 @@ public partial class ScenarioPreviewPopup : Popup<ScenarioPreviewPopup.Request>
 			string headerText,
 			string getText,
 			List<MonsterModel> monsterModels,
+			List<SavedReward> savedRewards,
 			params TextButton.Parameters[] buttonParameters)
 			: this(
 				headerText,
 				parameters => getText,
 				monsterModels,
+				savedRewards,
 				buttonParameters)
 		{
 					GD.Print("got to the request constructor!");
@@ -52,11 +57,13 @@ public partial class ScenarioPreviewPopup : Popup<ScenarioPreviewPopup.Request>
 			string headerText,
 			TextHelper.LabelTextDelegate getText,
 			List<MonsterModel> monsterModels,
+			List<SavedReward> savedRewards,
 			params TextButton.Parameters[] buttonParameters)
 		{
 			HeaderText = headerText;
 			GetText = getText;
 			MonsterModels = monsterModels;
+			SavedRewards = savedRewards;
 			ButtonParameters = buttonParameters;
 		}
 	}
@@ -69,6 +76,8 @@ public partial class ScenarioPreviewPopup : Popup<ScenarioPreviewPopup.Request>
 	private PackedScene _enemyPreview;
 	[Export]
 	private HBoxContainer _enemyPreviewParent;
+	[Export]
+	private Label _rewardsText;
 
 	[Export]
 	private PackedScene _textButtonScene;
@@ -77,13 +86,44 @@ public partial class ScenarioPreviewPopup : Popup<ScenarioPreviewPopup.Request>
 
 	private readonly List<TextButton> _buttons = new List<TextButton>();
 
+	private string GetRewardType(string rewardKey) {
+		try
+		{
+			var dict = new Dictionary<string, string>
+			{
+				["GainXPReward"] = "Experience",
+				["GainPartyAchievementReward"] = "Unlock Achievement",
+				["UnlockScenarioReward"] = "Unlock Scenario",
+				["GainProperityReward"] = "Gain Prosperity",
+				["GainCollectiveItemReward"] = "Gain New Item"
+			};
+			return dict[rewardKey];
+		} catch (Exception e)
+		{
+			GD.Print("logging some reward: ", rewardKey);
+			return "Some reward";
+			
+		}
+		
+	}
+
 	protected override void OnOpen()
 	{
 		base.OnOpen();
+		// clean up errant children still lingering
+		CleanUpEnemies();
 		
 		_headerLabel.SetText(PopupRequest.HeaderText);
 		RichTextParameters textParameters = _bodyLabel.GetRichTextParameters();
 		_bodyLabel.SetText(PopupRequest.GetText(textParameters));
+
+		string rewards = "Rewards: ";
+		List<string> values = new List<string>();
+		foreach(SavedReward reward in PopupRequest.SavedRewards)
+		{
+			values.Add(GetRewardType(reward.GetType().Name));
+		}
+		_rewardsText.SetText(rewards + string.Join(", ", values.ToArray()));
 
 		foreach(MonsterModel monster in PopupRequest.MonsterModels)
 		{
@@ -101,15 +141,19 @@ public partial class ScenarioPreviewPopup : Popup<ScenarioPreviewPopup.Request>
 			_buttons.Add(textButton);
 		}
 	}
+	
+	private void CleanUpEnemies() {
+		foreach (EnemyPreview enemy in _enemyPreviewParent.GetChildren())
+		{
+			enemy.QueueFree();
+		}
+	}
 
 	protected override void OnClosed()
 	{
 		base.OnClosed();
 
-		foreach (EnemyPreview enemy in _enemyPreviewParent.GetChildren())
-		{
-			enemy.QueueFree();
-		}
+		CleanUpEnemies();
 
 		foreach(TextButton button in _buttons)
 		{
