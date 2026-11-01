@@ -48,6 +48,11 @@ public class Scenario005 : ScenarioModel
 		new GainPartyAchievementReward(PartyAchievement.OozeDestroyed)
 	];
 
+	public override List<ScenarioEffect> ScenarioEffects { get; } =
+	[
+		new AllStartWithConditionScenarioEffect(Conditions.Infect)
+	];
+
 	private int _markersLeftToRemove;
 	private List<Marker> _markers = null;
 	private readonly Dictionary<Marker, List<Hex>> _infectedWaterSources = [];
@@ -56,13 +61,6 @@ public class Scenario005 : ScenarioModel
 	private CustomScenarioGoal _infectedWaterGoal;
 	private ScenarioRule _gelatinousGiantInvulnerableRule;
 	private ScenarioRule _spawnEliteBloodOozeRule;
-
-	public override async GDTask StartOfScenarioEffects(Character character)
-	{
-		await base.StartOfScenarioEffects(character);
-
-		await AbilityCmd.AddCondition(null, character, Conditions.Infect);
-	}
 
 	public override async GDTask InitializeAfterFirstRoomRevealed()
 	{
