@@ -13,8 +13,6 @@ public partial class ScenarioPreviewPopup : Popup<ScenarioPreviewPopup.Request>
 
 		public List<MonsterModel> MonsterModels { get; }
 
-		public List<SavedReward> SavedRewards { get; }
-
 		public Request(string headerText, string text)
 			: this(headerText, text, new TextButton.Parameters("Confirm", null))
 		{
@@ -41,29 +39,24 @@ public partial class ScenarioPreviewPopup : Popup<ScenarioPreviewPopup.Request>
 			string headerText,
 			string getText,
 			List<MonsterModel> monsterModels,
-			List<SavedReward> savedRewards,
 			params TextButton.Parameters[] buttonParameters)
 			: this(
 				headerText,
 				parameters => getText,
 				monsterModels,
-				savedRewards,
 				buttonParameters)
 		{
-					GD.Print("got to the request constructor!");
 		}
 		// for monsters
 		public Request(
 			string headerText,
 			TextHelper.LabelTextDelegate getText,
 			List<MonsterModel> monsterModels,
-			List<SavedReward> savedRewards,
 			params TextButton.Parameters[] buttonParameters)
 		{
 			HeaderText = headerText;
 			GetText = getText;
 			MonsterModels = monsterModels;
-			SavedRewards = savedRewards;
 			ButtonParameters = buttonParameters;
 		}
 	}
@@ -73,7 +66,8 @@ public partial class ScenarioPreviewPopup : Popup<ScenarioPreviewPopup.Request>
 	[Export]
 	private RichTextLabel _bodyLabel;
 	[Export]
-	private PackedScene _enemyPreview;
+	private PackedScene _monsterView;
+	//private PackedScene _enemyPreview;
 	[Export]
 	private HBoxContainer _enemyPreviewParent;
 	[Export]
@@ -86,27 +80,6 @@ public partial class ScenarioPreviewPopup : Popup<ScenarioPreviewPopup.Request>
 
 	private readonly List<TextButton> _buttons = new List<TextButton>();
 
-	private string GetRewardType(string rewardKey) {
-		try
-		{
-			var dict = new Dictionary<string, string>
-			{
-				["GainXPReward"] = "Experience",
-				["GainPartyAchievementReward"] = "Unlock Achievement",
-				["UnlockScenarioReward"] = "Unlock Scenario",
-				["GainProperityReward"] = "Gain Prosperity",
-				["GainCollectiveItemReward"] = "Gain New Item"
-			};
-			return dict[rewardKey];
-		} catch (Exception e)
-		{
-			GD.Print("logging some reward: ", rewardKey);
-			return "Some reward";
-			
-		}
-		
-	}
-
 	protected override void OnOpen()
 	{
 		base.OnOpen();
@@ -117,19 +90,11 @@ public partial class ScenarioPreviewPopup : Popup<ScenarioPreviewPopup.Request>
 		RichTextParameters textParameters = _bodyLabel.GetRichTextParameters();
 		_bodyLabel.SetText(PopupRequest.GetText(textParameters));
 
-		string rewards = "Rewards: ";
-		List<string> values = new List<string>();
-		foreach(SavedReward reward in PopupRequest.SavedRewards)
-		{
-			values.Add(GetRewardType(reward.GetType().Name));
-		}
-		_rewardsText.SetText(rewards + string.Join(", ", values.ToArray()));
-
 		foreach(MonsterModel monster in PopupRequest.MonsterModels)
 		{
-			EnemyPreview enemyPreview = _enemyPreview.Instantiate<EnemyPreview>();
-			_enemyPreviewParent.AddChild(enemyPreview);
-			enemyPreview.Init(monster);
+			ScenarioPreviewPopupMonster monsterPreview = _monsterView.Instantiate<ScenarioPreviewPopupMonster>();
+			_enemyPreviewParent.AddChild(monsterPreview);
+			monsterPreview.Init(monster);
 		}
 
 		foreach(TextButton.Parameters buttonParameters in PopupRequest.ButtonParameters)
@@ -143,9 +108,9 @@ public partial class ScenarioPreviewPopup : Popup<ScenarioPreviewPopup.Request>
 	}
 	
 	private void CleanUpEnemies() {
-		foreach (EnemyPreview enemy in _enemyPreviewParent.GetChildren())
+		foreach (MonsterView monster in _enemyPreviewParent.GetChildren())
 		{
-			enemy.QueueFree();
+			monster.QueueFree();
 		}
 	}
 

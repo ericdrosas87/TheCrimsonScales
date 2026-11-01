@@ -1,16 +1,17 @@
 [gd_scene format=3 uid="uid://cru75hhiolec5"]
 
 [ext_resource type="PackedScene" uid="uid://dp2uff21w610p" path="res://Scenes/UI/Popups/_PopupBase.tscn" id="1_1q25m"]
-[ext_resource type="Script" uid="uid://wqm0kh44bade" path="res://Scripts/UI/Popups/ScenarioPreviewPopup.cs" id="2_1q25m"]
+[ext_resource type="Script" uid="uid://wqm0kh44bade" path="res://Scripts/UI/Popups/ScenarioPreviewPopup/ScenarioPreviewPopup.cs" id="2_1q25m"]
+[ext_resource type="PackedScene" uid="uid://bvyvr1m1poq7l" path="res://Scenes/UI/Popups/ScenarioPreviewPopup/ScenarioPreviewPopupMonster.tscn" id="3_aw1he"]
 [ext_resource type="PackedScene" uid="uid://b51vd03g1dpc8" path="res://Scenes/UI/PanelButton.tscn" id="3_xod7d"]
 [ext_resource type="FontVariation" uid="uid://ciy2q5rti2m6m" path="res://Fonts/MarkaziVariation.tres" id="4_dgj6r"]
-[ext_resource type="PackedScene" uid="uid://c1uq5jarjyic6" path="res://Scenes/UI/Popups/ScenarioPreviewPopup/EnemyPreview.tscn" id="5_dtl7u"]
+[ext_resource type="PackedScene" uid="uid://3hqfq7j4p4n7" path="res://Scenes/UI/MonsterView.tscn" id="6_aw1he"]
 
 [node name="ScenarioPreviewPopup" unique_id=599801622 node_paths=PackedStringArray("_headerLabel", "_bodyLabel", "_enemyPreviewParent", "_rewardsText", "_textButtonParent") instance=ExtResource("1_1q25m")]
 script = ExtResource("2_1q25m")
 _headerLabel = NodePath("Panel/MarginContainer/VBoxContainer/Header/Label")
 _bodyLabel = NodePath("Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/Content/Label")
-_enemyPreview = ExtResource("5_dtl7u")
+_monsterView = ExtResource("3_aw1he")
 _enemyPreviewParent = NodePath("Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/EnemyList")
 _rewardsText = NodePath("Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/Rewards")
 _textButtonScene = ExtResource("3_xod7d")
@@ -44,7 +45,8 @@ layout_mode = 2
 size_flags_vertical = 3
 alignment = 1
 
-[node name="EnemyPreview" parent="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/EnemyList" index="0" unique_id=958380532 instance=ExtResource("5_dtl7u")]
+[node name="MonsterView" parent="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/EnemyList" index="0" unique_id=1882316233 instance=ExtResource("6_aw1he")]
+custom_minimum_size = Vector2(150, 200)
 layout_mode = 2
 
 [node name="Rewards" type="Label" parent="Panel/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" parent_id_path=PackedInt32Array(1052908713) index="2" unique_id=603289594]

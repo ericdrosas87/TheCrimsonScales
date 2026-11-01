@@ -227,16 +227,9 @@ public partial class BetweenScenariosController : SceneController<BetweenScenari
 			return;
 		}
 
-		string monsterList = string.Join("\n",scenarioModel.MonsterModels.Select(monster => $"- {monster.Name}"));
-
-		// foreach(SavedReward reward in scenarioModel.Rewards)
-		// {
-		// 	GD.Print("GetLabelText: ", reward.GetType().Name);
-		// }
 		AppController.Instance.PopupManager.OpenPopupOnTop(new ScenarioPreviewPopup.Request($"Scenario {scenarioModel.ScenarioNumber} - {scenarioModel.Name}",
 		$"Goal: {scenarioModel.PreviewText} \n",
 			scenarioModel.MonsterModels,
-			scenarioModel.Rewards,
 			new TextButton.Parameters("Cancel",
 				() =>
 				{
