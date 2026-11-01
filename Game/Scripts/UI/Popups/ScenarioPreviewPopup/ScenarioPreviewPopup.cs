@@ -47,7 +47,6 @@ public partial class ScenarioPreviewPopup : Popup<ScenarioPreviewPopup.Request>
 				buttonParameters)
 		{
 		}
-		// for monsters
 		public Request(
 			string headerText,
 			TextHelper.LabelTextDelegate getText,
@@ -67,9 +66,8 @@ public partial class ScenarioPreviewPopup : Popup<ScenarioPreviewPopup.Request>
 	private RichTextLabel _bodyLabel;
 	[Export]
 	private PackedScene _monsterView;
-	//private PackedScene _enemyPreview;
 	[Export]
-	private HBoxContainer _enemyPreviewParent;
+	private HBoxContainer _monsterPreviewParent;
 	[Export]
 	private Label _rewardsText;
 
@@ -93,7 +91,7 @@ public partial class ScenarioPreviewPopup : Popup<ScenarioPreviewPopup.Request>
 		foreach(MonsterModel monster in PopupRequest.MonsterModels)
 		{
 			ScenarioPreviewPopupMonster monsterPreview = _monsterView.Instantiate<ScenarioPreviewPopupMonster>();
-			_enemyPreviewParent.AddChild(monsterPreview);
+			_monsterPreviewParent.AddChild(monsterPreview);
 			monsterPreview.Init(monster);
 		}
 
@@ -108,7 +106,7 @@ public partial class ScenarioPreviewPopup : Popup<ScenarioPreviewPopup.Request>
 	}
 	
 	private void CleanUpEnemies() {
-		foreach (MonsterView monster in _enemyPreviewParent.GetChildren())
+		foreach (ScenarioPreviewPopupMonster monster in _monsterPreviewParent.GetChildren())
 		{
 			monster.QueueFree();
 		}
