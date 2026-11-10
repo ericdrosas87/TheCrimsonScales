@@ -9,7 +9,7 @@ public partial class MonsterView : Control
 
 	public void Init(MonsterModel monsterModel)
 	{
-		_textureRect.Texture = GD.Load<Texture2D>(monsterModel.PortraitTexturePath);
-		_colorOutline.SetModulate(Color.FromHtml("ffffff"));
+		_textureRect.Texture = ResourceLoader.Load<Texture2D>(monsterModel.PortraitTexturePath);
+		_colorOutline.SetModulate(Colors.White);
 	}
 }

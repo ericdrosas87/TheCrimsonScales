@@ -13,7 +13,7 @@ public class Scenario010 : ScenarioModel
 
 	public override string PreviewText =>
 	"""
-		Destroy at least 5 supply crates.
+		Destroy at least five Supply Crates.
 	""";
 
 	public override string IntroductionText =>

@@ -12,7 +12,7 @@ public class Scenario014 : ScenarioModel
 
 	public override string PreviewText =>
 	"""
-		Kill 3 Cultists.
+		Kill three Cultists.
 	""";
 
 	public override string IntroductionText =>

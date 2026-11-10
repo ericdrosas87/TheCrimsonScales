@@ -4,19 +4,14 @@
 [ext_resource type="Script" uid="uid://cevlkv2wndhfa" path="res://Scripts/UI/Popups/ScenarioPreviewPopup/ScenarioPreviewPopupMonster.cs" id="1_ndo5t"]
 [ext_resource type="FontVariation" uid="uid://ciy2q5rti2m6m" path="res://Fonts/MarkaziVariation.tres" id="2_p0ve1"]
 
-[node name="ScenarioPreviewPopupMonster" type="Control" unique_id=2085745433 node_paths=PackedStringArray("_monsterNameLabel", "_monsterView")]
-custom_minimum_size = Vector2(150, 200)
-layout_mode = 3
-anchors_preset = 0
+[node name="ScenarioPreviewPopupMonster" type="MarginContainer" unique_id=91874163 node_paths=PackedStringArray("_monsterNameLabel", "_monsterView")]
 script = ExtResource("1_ndo5t")
 _monsterNameLabel = NodePath("VBoxContainer/MonsterName")
 _monsterView = NodePath("VBoxContainer/MonsterView")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=378949509]
 custom_minimum_size = Vector2(150, 225)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 2
 
 [node name="MonsterView" parent="VBoxContainer" unique_id=1882316233 instance=ExtResource("1_jrdmh")]
 custom_minimum_size = Vector2(150, 200)

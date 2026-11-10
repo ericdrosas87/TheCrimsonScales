@@ -40,7 +40,7 @@ public class Scenario016 : ScenarioModel
 
 	public override string PreviewText =>
 	"""
-		Loot both goal treasures to unlock the door and defeat the Apex Demon.
+		Defeat the Apex Demon.
 	""";
 
 	public override string IntroductionText =>

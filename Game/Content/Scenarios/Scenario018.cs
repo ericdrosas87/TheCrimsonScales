@@ -40,7 +40,7 @@ public class Scenario018 : ScenarioModel
 
 	public override string PreviewText =>
 	"""
-		Kill all enemies and escape the room.
+		Kill all enemies and escape.
 	""";
 
 	public override string IntroductionText =>

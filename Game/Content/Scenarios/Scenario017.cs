@@ -14,7 +14,7 @@ public class Scenario017 : ScenarioModel
 
 	public override string PreviewText =>
 	"""
-		Loot the Orb of Embers and escape the room.
+		Loot the Orb of Embers and escape.
 	""";
 
 	public override string IntroductionText =>
